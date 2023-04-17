@@ -21,7 +21,12 @@ def main():
 
 
     # Initialize board
+    nonogram = None # Nonogram()
     boxes = []
+    for row in nonogram:
+        box_row = []
+        for col in row:
+            boxes.append(None)
     
     running = True
     while running:
