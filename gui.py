@@ -1,10 +1,11 @@
 import pygame
 from pygame.locals import *
 import sys
+from nonogram import Nonogram
 
 def main():
     # Define constants
-    SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
+    SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
 
     BOX_EMPTY = 0
     BOX_FILLED = 1
@@ -12,8 +13,9 @@ def main():
 
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
+    BACKGROUND = (110, 220, 250)
 
-    BOARD_ORIGIN = BOARD_X, BOARD_Y = (100, 100)
+    BOARD_ORIGIN = BOARD_X, BOARD_Y = (50, 50)
     BOX_SIZE = 40
     INSTRUCTION_SIZE = 60
 
@@ -21,24 +23,24 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Nonogram")
-    BOARD_FONT = pygame.font.SysFont("arial", 16)
+    BOARD_FONT = pygame.font.SysFont("arial", 24)
     BTN_FONT = pygame.font.SysFont("arial", 20)
 
     # Initialize buttons
     buttons = [
         (pygame.Rect(
             SCREEN_WIDTH/8, SCREEN_HEIGHT*7/8,
-            SCREEN_WIDTH/8, SCREEN_HEIGHT/16), "New Game"),
+            SCREEN_WIDTH/6, SCREEN_HEIGHT/16), "New Game"),
         (pygame.Rect(
             SCREEN_WIDTH*3/8, SCREEN_HEIGHT*7/8,
-            SCREEN_WIDTH/8, SCREEN_HEIGHT/16), "Check Board"),
+            SCREEN_WIDTH/6, SCREEN_HEIGHT/16), "Check Board"),
         (pygame.Rect(
             SCREEN_WIDTH*5/8, SCREEN_HEIGHT*7/8,
             SCREEN_WIDTH/8, SCREEN_HEIGHT/16), "Show Answer")
     ]
 
     # Initialize board
-    nonogram = Nonogram()
+    nonogram = Nonogram(10)
 
     box_coord = lambda n : (n > 0)*INSTRUCTION_SIZE + max(0, n-1)*BOX_SIZE
     box_width = lambda n : BOX_SIZE if n > 0 else INSTRUCTION_SIZE
@@ -51,7 +53,8 @@ def main():
                 box_width(j), box_width(i)
             ))
         boxes.append(row)
-    
+
+
     # Game loop
     running = True
     while running:
@@ -69,6 +72,7 @@ def main():
                 for i, row in enumerate([r[1:] for r in boxes[1:]]):
                     for j, box in enumerate(row):
                         if box.collidepoint(coords):
+                            i, j = i+1, j+1
                             # Marked if right click, otherwise invert
                             nonogram.board[i][j] = (BOX_MARKED if event.button == 3
                                                     else BOX_EMPTY if nonogram.board[i][j] == BOX_FILLED
@@ -84,6 +88,9 @@ def main():
 
                         # elif name == "Show "
     
+        # Draw background
+        screen.fill(BACKGROUND)
+
         # Draw board
         for row, val_row in zip(boxes, nonogram.board):
             for box, value in zip(row, val_row):
@@ -100,7 +107,8 @@ def main():
                 # Instructions
                 else:
                     pygame.draw.rect(screen, WHITE, box)
-                    screen.blit(BOARD_FONT.render(" ".join(value), True, BLACK), box)
+                    sep = " " if box.width == INSTRUCTION_SIZE else "\n"
+                    screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
                 # Draw outline
                 pygame.draw.rect(screen, BLACK, box, 2)
 
@@ -115,7 +123,6 @@ def main():
 
     pygame.quit()
     sys.exit(0)
-
 
 
 if __name__ == "__main__":
