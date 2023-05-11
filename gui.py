@@ -73,11 +73,20 @@ def main():
                     for j, box in enumerate(row):
                         if box.collidepoint(coords):
                             i, j = i+1, j+1
-                            # Marked if right click, otherwise invert
-                            nonogram.board[i][j] = (BOX_MARKED if event.button == 3
-                                                    else BOX_EMPTY if nonogram.board[i][j] == BOX_FILLED
-                                                    else BOX_FILLED)
-                            
+
+                            # If right click, make empty if already marked, other mark the box
+                            if event.button == 3:
+                                if nonogram.board[i][j] == BOX_MARKED:
+                                    nonogram.board[i][j] = BOX_EMPTY
+                                else:
+                                    nonogram.board[i][j] = BOX_MARKED
+                            # If left click, make empty if already filled, other fill the box
+                            else:
+                                if nonogram.board[i][j] == BOX_FILLED:
+                                    nonogram.board[i][j] = BOX_EMPTY
+                                else:
+                                    nonogram.board[i][j] = BOX_FILLED
+
                 # Check if button is clicked
                 for button, name in buttons:
                     if button.collidepoint(coords):
