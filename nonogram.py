@@ -12,13 +12,13 @@ class Nonogram:
 
     def _init_board(self):
 
-        count = 0;
+        count = 0
         for i in range(1, self.size + 1):
             newRow = []
             for j in range(0, self.size):
                 if self.answer[i][j]:
                     count = count + 1
-                elif !self.answer[i][j] and count != 0:
+                elif not self.answer[i][j] and count not = 0:
                     newRow.append(count)
                     count = 0
             self.board[i][0] = newRow
@@ -28,7 +28,7 @@ class Nonogram:
             for j in range(0, self.size):
                 if self.answer[j][i]:
                     count = count + 1
-                elif !self.answer[j][i] and count != 0:
+                elif not self.answer[j][i] and count not = 0:
                     newCol.append(count)
                     count = 0
             self.board[0][i] = newCol
