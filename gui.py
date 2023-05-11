@@ -3,6 +3,24 @@ from pygame.locals import *
 import sys
 from nonogram import Nonogram
 
+def _init_board():
+    
+
+    box_coord = lambda n : (n > 0)*INSTRUCTION_SIZE + max(0, n-1)*BOX_SIZE
+    box_width = lambda n : BOX_SIZE if n > 0 else INSTRUCTION_SIZE
+    boxes = []
+    for i in range(nonogram.size+1):
+        row = []
+        for j in range(nonogram.size+1):
+            row.append(pygame.Rect(
+                BOARD_X + box_coord(j), BOARD_Y + box_coord(i),
+                box_width(j), box_width(i)
+            ))
+        boxes.append(row)
+
+        
+    return Nonogram(10), boxes
+
 def main():
     # Define constants
     SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
@@ -40,20 +58,7 @@ def main():
     ]
 
     # Initialize board
-    nonogram = Nonogram(10)
-
-    box_coord = lambda n : (n > 0)*INSTRUCTION_SIZE + max(0, n-1)*BOX_SIZE
-    box_width = lambda n : BOX_SIZE if n > 0 else INSTRUCTION_SIZE
-    boxes = []
-    for i in range(nonogram.size+1):
-        row = []
-        for j in range(nonogram.size+1):
-            row.append(pygame.Rect(
-                BOARD_X + box_coord(j), BOARD_Y + box_coord(i),
-                box_width(j), box_width(i)
-            ))
-        boxes.append(row)
-
+    nonogram, boxes = _init_board()
 
     # Game loop
     running = True
@@ -92,8 +97,10 @@ def main():
                     if button.collidepoint(coords):
                         pass
                         # if name == "New Game":
+                        # _init_board()
 
                         # elif name == "Check Board":
+                        # nonogram.check_board
 
                         # elif name == "Show "
     
