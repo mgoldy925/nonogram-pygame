@@ -35,7 +35,6 @@ def init_board():
                 box_width(j), box_width(i)
             ))
         boxes.append(row)
-
         
     return nonogram, boxes
 
@@ -140,8 +139,10 @@ def main():
                 # Instructions
                 else:
                     pygame.draw.rect(screen, WHITE, box)
-                    sep = " " if box.width == INSTRUCTION_SIZE else "\n"
-                    screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
+                    sep = " " # if box.width == INSTRUCTION_SIZE else "\n"
+                    tmp = BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK)
+                    tmp = pygame.transform.rotozoom(tmp, 270, 1) if box.width == INSTRUCTION_SIZE else tmp
+                    screen.blit(tmp, box)
                 # Draw outline
                 pygame.draw.rect(screen, BLACK, box, 2)
 
