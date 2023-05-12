@@ -101,25 +101,25 @@ def main():
                     if button.collidepoint(coords):
                         pass
                         # if name == "New Game":
-                        # _init_board()
+                        #     init_board()
 
                         # elif name == "Check Board":
-                        # nonogram.check_board
+                        #     nonogram.check_board
 
-                        # elif name == "Show "
-                        # for row, val_row in zip(boxes, nonogram.answer):
-                        #     for box, value in zip(row, val_row):
+                        # elif name == "Show ":
+                        #     for row, val_row in zip(boxes, nonogram.answer):
+                        #         for box, value in zip(row, val_row):
                                 
-                        #         if value == BOX_EMPTY:
-                        #             pygame.draw.rect(screen, WHITE, box)
-                        #         elif value == BOX_FILLED:
-                        #             pygame.draw.rect(screen, BLACK, box)
-                        #         else:
-                        #             pygame.draw.rect(screen, WHITE, box)
-                        #             sep = " " if box.width == INSTRUCTION_SIZE else "\n"
-                        #             screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
+                        #             if value == BOX_EMPTY:
+                        #                 pygame.draw.rect(screen, WHITE, box)
+                        #             elif value == BOX_FILLED:
+                        #                 pygame.draw.rect(screen, BLACK, box)
+                        #             else:
+                        #                 pygame.draw.rect(screen, WHITE, box)
+                        #                 sep = " " if box.width == INSTRUCTION_SIZE else "\n"
+                        #                 screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
                         
-                        #     pygame.draw.rect(screen, BLACK, box, 2)    
+                        #             pygame.draw.rect(screen, BLACK, box, 2)    
     
         # Draw background
         screen.fill(BACKGROUND)
