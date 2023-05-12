@@ -3,9 +3,24 @@ from pygame.locals import *
 import sys
 from nonogram import Nonogram
 
-def _init_board()
-    
+# Declare globals / Define constants
+SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
 
+BOX_EMPTY = 0
+BOX_FILLED = 1
+BOX_MARKED = 2
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BACKGROUND = (110, 220, 250)
+
+BOARD_ORIGIN = BOARD_X, BOARD_Y = (50, 50)
+BOX_SIZE = 40
+INSTRUCTION_SIZE = 60
+
+
+def _init_board():
+    
     box_coord = lambda n : (n > 0)*INSTRUCTION_SIZE + max(0, n-1)*BOX_SIZE
     box_width = lambda n : BOX_SIZE if n > 0 else INSTRUCTION_SIZE
     boxes = []
@@ -22,20 +37,6 @@ def _init_board()
     return Nonogram(10), boxes
 
 def main():
-    # Define constants
-    SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
-
-    BOX_EMPTY = 0
-    BOX_FILLED = 1
-    BOX_MARKED = 2
-
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    BACKGROUND = (110, 220, 250)
-
-    BOARD_ORIGIN = BOARD_X, BOARD_Y = (50, 50)
-    BOX_SIZE = 40
-    INSTRUCTION_SIZE = 60
 
     # Start game
     pygame.init()
@@ -94,6 +95,19 @@ def main():
                         # nonogram.check_board
 
                         # elif name == "Show "
+                        # for row, val_row in zip(boxes, nonogram.answer):
+                        #     for box, value in zip(row, val_row):
+                                
+                        #         if value == BOX_EMPTY:
+                        #             pygame.draw.rect(screen, WHITE, box)
+                        #         elif value == BOX_FILLED:
+                        #             pygame.draw.rect(screen, BLACK, box)
+                        #         else:
+                        #             pygame.draw.rect(screen, WHITE, box)
+                        #             sep = " " if box.width == INSTRUCTION_SIZE else "\n"
+                        #             screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
+                        
+                        #     pygame.draw.rect(screen, BLACK, box, 2)    
     
         # Draw background
         screen.fill(BACKGROUND)
