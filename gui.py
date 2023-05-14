@@ -19,10 +19,12 @@ BOARD_ORIGIN = BOARD_X, BOARD_Y = (50, 50)
 BOX_SIZE = 40
 INSTRUCTION_SIZE = 60
 
+BOARD_SIZE = 10
 
-def init_board():
 
-    nonogram = Nonogram(10)
+def init_board(nonogram):
+
+
     
     box_coord = lambda n : (n > 0)*INSTRUCTION_SIZE + max(0, n-1)*BOX_SIZE
     box_width = lambda n : BOX_SIZE if n > 0 else INSTRUCTION_SIZE
@@ -40,6 +42,8 @@ def init_board():
     return nonogram, boxes
 
 def main():
+
+    nonogram = Nonogram(BOARD_SIZE)
 
     # Start game
     pygame.init()
@@ -62,7 +66,7 @@ def main():
     ]
 
     # Initialize board
-    nonogram, boxes = init_board()
+    nonogram, boxes = init_board(nonogram)
 
     # Game loop
     running = True
@@ -99,27 +103,31 @@ def main():
                 # Check if button is clicked
                 for button, name in buttons:
                     if button.collidepoint(coords):
-                        pass
-                        # if name == "New Game":
-                        #     init_board()
+                        if name == "New Game":
+                            nonogram = Nonogram(BOARD_SIZE)
 
-                        # elif name == "Check Board":
-                        #     nonogram.check_board
+                        elif name == "Check Board":
+                            if nonogram.check_board():
+                                screen.fill(WHITE)
+                            else:
+                                screen.fill(WHITE)
 
-                        # elif name == "Show ":
-                        #     for row, val_row in zip(boxes, nonogram.answer):
-                        #         for box, value in zip(row, val_row):
+                        elif name == "Show Answer":
+                            screen.fill(WHITE)
+                            nonogram, boxes = init_board(nonogram)
+                            for row, val_row in zip(boxes, nonogram.answer):
+                                for box, value in zip(row, val_row):
                                 
-                        #             if value == BOX_EMPTY:
-                        #                 pygame.draw.rect(screen, WHITE, box)
-                        #             elif value == BOX_FILLED:
-                        #                 pygame.draw.rect(screen, BLACK, box)
-                        #             else:
-                        #                 pygame.draw.rect(screen, WHITE, box)
-                        #                 sep = " " if box.width == INSTRUCTION_SIZE else "\n"
-                        #                 screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
+                                    if value == BOX_EMPTY:
+                                        pygame.draw.rect(screen, WHITE, box)
+                                    elif value == BOX_FILLED:
+                                        pygame.draw.rect(screen, BLACK, box)
+                                    else:
+                                        pygame.draw.rect(screen, WHITE, box)
+                                        sep = " " if box.width == INSTRUCTION_SIZE else "\n"
+                                        screen.blit(BOARD_FONT.render(sep.join(str(n) for n in value), True, BLACK), box)
                         
-                        #             pygame.draw.rect(screen, BLACK, box, 2)    
+                                    pygame.draw.rect(screen, BLACK, box, 2)    
     
         # Draw background
         screen.fill(BACKGROUND)
