@@ -24,7 +24,7 @@ class Nonogram:
             if count != 0:
                 newRow.append(count)
                 count = 0
-            self.board[i+1][0] = newRow
+            self.board[i+1][0] = newRow if newRow else [0]
 
         for i in range (0, self.size):
             newCol = []
@@ -37,7 +37,7 @@ class Nonogram:
             if count != 0:
                 newCol.append(count)
                 count = 0
-            self.board[0][i+1] = newCol
+            self.board[0][i+1] = newCol if newCol else [0]
 
     def check_board(self):
 
